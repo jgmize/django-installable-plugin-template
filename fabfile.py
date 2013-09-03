@@ -1,9 +1,3 @@
-"""
-Creating standalone Django apps is a PITA because you're not in a project, so
-you don't have a settings.py file.  I can never remember to define
-DJANGO_SETTINGS_MODULE, so I run these commands which get the right env
-automatically.
-"""
 import functools
 import os
 
@@ -20,14 +14,19 @@ os.environ['PYTHONPATH'] = os.pathsep.join([ROOT,])
 _local = functools.partial(_local, capture=False)
 
 
+def cover():
+    """Run the test suite with coverage."""
+    _local('django-admin.py test --with-coverage --cover-package=' + APP_NAME)
+
+
+def migrate(migration=''):
+    """Update a testing database with south."""
+    _local('django-admin.py migrate %s %s' % (APP_NAME, migration))
+
+
 def shell():
     """Start a Django shell with the test settings."""
     _local('django-admin.py shell')
-
-
-def test(test_case=''):
-    """Run the test suite."""
-    _local('django-admin.py test %s' % test_case)
 
 
 def serve():
@@ -48,7 +47,11 @@ def schema(initial=False):
         _local('django-admin.py schemamigration %s --auto' % APP_NAME)
 
 
-def migrate(migration=''):
-    """Update a testing database with south."""
-    _local('django-admin.py migrate %s %s' % (APP_NAME, migration))
+def test(test_case=''):
+    """Run the test suite."""
+    _local('django-admin.py test %s' % test_case)
 
+
+def test_ipdb(test_case=''):
+    """Run the test suite using ipdb to debug errors and failures."""
+    _local('django-admin.py test %s --ipdb --ipdb-failures' % test_case)

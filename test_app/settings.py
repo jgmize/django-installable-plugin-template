@@ -22,8 +22,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_nose',
     'south',
+    'django_nose',  # must come after south b/c south overrides test runner
     '{{project_name}}',
 )
 

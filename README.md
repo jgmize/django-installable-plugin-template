@@ -8,7 +8,7 @@ Using the development environment
 Install requirements
 
     pip install fabric
-    pip install -r requirements.txt
+    pip install -r requirements/dev.txt
 
 Setup db
 
@@ -26,6 +26,14 @@ Using the Python shell
 Running tests
 
     fab test
+
+Running tests with coverage
+
+    fab cover
+
+Running tests using ipdb to debug errors and failures
+
+    fab test_ipdb
 
 Creating South schema migrations
 

@@ -1,0 +1,8 @@
+-r prod.txt
+
+coverage
+mox
+nose
+django-nose
+ipdbplugin
+fabric
